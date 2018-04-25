@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>iview example</title>
+    <!-- jquery -->
+    <script src="lib/jquery/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="lib/vue/vue.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="lib/iview/styles/iview.css">
+
+    <script type="text/javascript" src="lib/iview/iview.min.js"></script>
+</head>
+<style >
+#app{
+  width:100%;
+  padding:20px;
+}
+</style>
+<body>
+<div id="app">
+  <Card style="">
+        <p slot="title">
+            <Icon type="ios-pulse-strong"></Icon>
+            状态：
+            <Icon v-if="status" type="checkmark-round" style="color:green;"></Icon>
+            <Icon v-if="!status" type="close-round" style="color:red;"></Icon>
+        </p>
+        <a href="#" slot="extra" @click="update">
+            <Icon type="ios-loop-strong"></Icon>
+            刷新
+        </a>
+        <div>
+          <div v-if="status"><Icon type="person"></Icon>登录用户：{{username}}</div>
+          <div v-if="!status">
+            扫码登录：<br>
+            <img :src="login_url">
+
+          </div>
+        </div>
+    </Card>
+    <Card style="">
+          <p slot="title">
+              <Icon type="help-buoy"></Icon>
+              API:
+          </p>
+          <div>
+            <i-table border :columns="api.columns" :data="api.data"></i-table>
+          </div>
+      </Card>
+
+</div>
+<script>
+    var app=new Vue({
+        el: '#app',
+        data: {
+            status:0,
+            username:"",
+            login_url:"",
+            api:{
+              columns:[
+                {
+                    title: 'API',
+                    key: 'api'
+                },
+                {
+                    title: '参数',
+                    key: 'p'
+                },
+                {
+                    title: '备注',
+                    key: 'remark'
+                },
+                {
+                    title: '实例',
+                    key: 'e'
+                }
+              ],
+              data:[
+                {
+                    api: 'send',
+                    p: 'to,msg',
+                    remark:"发送消息",
+                    e:"/api?act=send&to=user1&msg=this is a test"
+                },
+                {
+                    api: 'roomsend',
+                    p: 'to,msg',
+                    remark:"发送群消息",
+                    e:"/api?act=roomsend&to=group1&msg=this is a test"
+                }
+              ]
+            }
+
+        },
+        methods: {
+            update: function () {
+              var that=this;
+              $.get("/api?act=status",function(msg){
+                console.log(msg);
+                that.status=msg.status;
+                that.username=msg.username;
+                that.login_url=msg.login_url;
+
+              });
+            }
+        }
+    });
+    app.update();
+    setInterval(app.update,1000);
+  </script>
+</body>
+</html>
