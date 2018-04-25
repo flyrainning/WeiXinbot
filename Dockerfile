@@ -8,7 +8,7 @@ RUN apt-get update -y \
   && apt-get autoremove \
   && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
 RUN apt-get install -y nodejs
 
 ADD app /app
