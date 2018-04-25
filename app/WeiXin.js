@@ -11,7 +11,19 @@ wx={
   login_url:"",
   login_code:0,
   version:()=>bot.version(),
-  start:()=>bot.start(),
+  start:()=>{
+    var reset=false
+    while (!reset) {
+      try{
+        bot.start()
+        reset=true
+      } catch (e) {
+        reset=false
+      }
+    }
+    
+
+  },
   send:async (to,msg)=>{
     res="0";
     if (wx.status){
