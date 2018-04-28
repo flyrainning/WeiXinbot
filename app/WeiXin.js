@@ -21,7 +21,7 @@ wx={
         reset=false
       }
     }
-    
+
 
   },
   send:async (to,msg)=>{
@@ -109,7 +109,7 @@ bot.on('scan', (url, code) =>{
   console.log(`Scan QR Code to login: ${code}\n${url}`)
   if (!/201|200/.test(String(code))) {
     const loginUrl = url.replace(/\/qrcode\//, '/l/')
-    QrcodeTerminal.generate(loginUrl)
+    QrcodeTerminal.generate(loginUrl,{small: true})
   }
   wx.login_url=url;
   wx.login_code=code;
