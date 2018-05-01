@@ -1,4 +1,4 @@
-FROM ubuntu:17.10
+FROM ubuntu:18.04
 MAINTAINER Flyrainning "http://www.fengpiao.net"
 
 RUN apt-get update -y \
