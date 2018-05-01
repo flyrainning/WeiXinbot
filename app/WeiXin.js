@@ -28,12 +28,12 @@ wx={
     res="0";
     if (wx.status){
       try{
-        var contact = await Contact.find({name:to});
+        var contact = await Contact.find({alias:to});
         var isFind=false;
         if (contact){
           isFind=true;
         }else{
-          contact = await Contact.find({alias:to});
+          contact = await Contact.find({name:to});
         }
         if (contact){
           isFind=true;
