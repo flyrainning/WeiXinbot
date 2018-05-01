@@ -37,6 +37,7 @@ RUN apt-get update -y \
     libxrender1 \
     libxss1 \
     libxtst6 \
+    gnupg \
   && apt-get autoclean \
   && apt-get autoremove \
   && rm -rf /var/lib/apt/lists/*
