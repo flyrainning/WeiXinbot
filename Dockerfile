@@ -4,6 +4,7 @@ MAINTAINER Flyrainning "http://www.fengpiao.net"
 RUN apt-get update -y \
   && apt-get install -y \
     curl \
+    git \
     ca-certificates \
     libappindicator1 \
     libasound2 \
