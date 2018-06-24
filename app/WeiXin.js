@@ -1,7 +1,7 @@
 const QrcodeTerminal  = require('qrcode-terminal')
 const finis           = require('finis')
 
-const { Contact,FriendRequest,Message,MediaMessage,Room,Wechaty } = require('wechaty')
+const { Contact,FriendRequest,Message,MediaMessage,Room,Wechaty,qrcodeValueToImageUrl } = require('wechaty')
 const bot = Wechaty.instance()
 
 
@@ -9,6 +9,7 @@ wx={
   status:0,
   user:"",
   login_url:"",
+  msg:"",
   login_code:0,
   version:()=>bot.version(),
   start:()=>{
@@ -105,14 +106,19 @@ wx={
 
 }
 
-bot.on('scan', (url, code) =>{
-  console.log(`Scan QR Code to login: ${code}\n${url}`)
-  if (!/201|200/.test(String(code))) {
-    const loginUrl = url.replace(/\/qrcode\//, '/l/')
-    QrcodeTerminal.generate(loginUrl,{small: true})
+bot.on('scan', (qrcode, status, data) =>{
+  if (data) {
+    wx.msg=data;
   }
-  wx.login_url=url;
-  wx.login_code=code;
+  QrcodeTerminal.generate(qrcode,{small: true})
+  wx.login_url=qrcodeValueToImageUrl(qrcode);
+  wx.login_code=status;
+
+  console.log(wx.login_url)
+  console.log('^^^ Online QR Code Image URL ^^^ ')
+  console.log(`[${status}] ${qrcode} Scan QR Code above url to log in: `)
+
+
 
 })
 bot.on('login', user => {
