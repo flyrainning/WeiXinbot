@@ -5,6 +5,7 @@ RUN apt-get update -y \
   && apt-get install -y \
     curl \
     git \
+    build-essential \
     ca-certificates \
     libappindicator1 \
     libasound2 \
